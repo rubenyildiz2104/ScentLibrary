@@ -86,6 +86,32 @@ export default function CollectionPage() {
   const [selectedPerfumeId, setSelectedPerfumeId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
+  // Filter & Sort State
+  const [collectionSearch, setCollectionSearch] = useState("");
+  const [sortBy, setBy] = useState<"name_asc" | "name_desc" | "level" | "oxidation">("name_asc");
+
+  const filteredItems = items
+    .filter(item => {
+      const search = collectionSearch.toLowerCase();
+      return (
+        item.perfume.name.toLowerCase().includes(search) ||
+        (item.perfume.brand?.toLowerCase().includes(search) || false)
+      );
+    })
+    .sort((a, b) => {
+      if (sortBy === "name_asc") return a.perfume.name.localeCompare(b.perfume.name);
+      if (sortBy === "name_desc") return b.perfume.name.localeCompare(a.perfume.name);
+      if (sortBy === "level") return b.level - a.level;
+      if (sortBy === "oxidation") {
+        const getScore = (item: CollectionItem) => {
+          const days = Math.floor((Date.now() - new Date(item.openedAt).getTime()) / (1000 * 60 * 60 * 24));
+          return days * (100 - item.level);
+        };
+        return getScore(b) - getScore(a);
+      }
+      return 0;
+    });
+
   useEffect(() => {
     if (!user) return;
     fetchCollection();
@@ -225,6 +251,35 @@ export default function CollectionPage() {
           </button>
         </div>
 
+        {/* Search & Sort Controls */}
+        {items.length > 0 && (
+          <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <div className="relative flex-1 group">
+              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary transition-colors">🔍</span>
+              <input 
+                type="text" 
+                placeholder={t('search_collection')}
+                value={collectionSearch}
+                onChange={e => setCollectionSearch(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 transition-all"
+              />
+            </div>
+            <div className="relative min-w-[160px]">
+              <select 
+                value={sortBy}
+                onChange={e => setBy(e.target.value as any)}
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm text-white/70 appearance-none focus:outline-none focus:border-primary/50 cursor-pointer"
+              >
+                <option value="name_asc">↑ {t('sort_name_asc')}</option>
+                <option value="name_desc">↓ {t('sort_name_desc')}</option>
+                <option value="level">💧 {t('sort_level')}</option>
+                <option value="oxidation">🧪 {t('sort_oxidation')}</option>
+              </select>
+              <span className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-white/20 text-[10px]">▼</span>
+            </div>
+          </div>
+        )}
+
         {fetching ? (
           <div className="space-y-4">{[...Array(3)].map((_, i) => <div key={i} className="glass rounded-3xl h-32 animate-pulse" />)}</div>
         ) : items.length === 0 ? (
@@ -233,9 +288,14 @@ export default function CollectionPage() {
              <p className="text-white/40 mb-8 font-medium">{t('vault_empty')}</p>
              <Link href="/library" className="px-8 py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-white hover:bg-white/10 transition-all">{t('nav_library')}</Link>
           </div>
+        ) : filteredItems.length === 0 ? (
+          <div className="py-20 text-center glass rounded-3xl border border-white/5 flex flex-col items-center">
+             <p className="text-white/30 font-medium">{t('no_fragrances')}</p>
+             <button onClick={() => setCollectionSearch("")} className="mt-4 text-primary text-sm font-bold hover:underline">{t('clear_filters')}</button>
+          </div>
         ) : (
           <div className="space-y-4">
-            {items.map(item => (
+            {filteredItems.map(item => (
               <div 
                 key={item.id} 
                 onClick={() => setDetailItem(item)}

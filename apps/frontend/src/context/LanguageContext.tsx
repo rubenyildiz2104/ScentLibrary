@@ -43,6 +43,13 @@ const translations = {
     feature_3_title: "Scent Picker",
     feature_3_desc: "Not sure what to wear? Let the intelligent scent picker choose based on weather, season, and your mood.",
     
+    // Sorting & Search
+    sort_name_asc: "Name (A-Z)",
+    sort_name_desc: "Name (Z-A)",
+    sort_level: "Level Remaining",
+    sort_oxidation: "Oxidation Index",
+    search_collection: "Search my collection...",
+    
     // Discovery / Wishlist
     discovery_title: "My Discovery",
     discovery_subtitle: "Scents to Explore",
@@ -232,6 +239,13 @@ const translations = {
     feature_2_desc: "Surveillez la macération de votre collection pour savoir quand un parfum atteint son apogée.",
     feature_3_title: "Scent Picker",
     feature_3_desc: "Laissez l'intelligence artificielle choisir votre parfum selon la météo et votre humeur.",
+    
+    // Sorting & Search
+    sort_name_asc: "Nom (A-Z)",
+    sort_name_desc: "Nom (Z-A)",
+    sort_level: "Niveau restant",
+    sort_oxidation: "Indice d'Oxydation",
+    search_collection: "Rechercher dans ma collection...",
     
     // Discovery / Wishlist
     discovery_title: "Mes Découvertes",
