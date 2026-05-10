@@ -8,9 +8,7 @@ const withSerwist = withSerwistInit({
 });
 
 const nextConfig: NextConfig = {
-  experimental: {
-    turbopack: {},
-  },
+  turbopack: {},
   images: {
     remotePatterns: [
       {
