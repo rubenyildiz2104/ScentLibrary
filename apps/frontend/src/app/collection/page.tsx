@@ -31,7 +31,6 @@ type SearchPerfume = {
 
 const FORMAT_EMOJIS: Record<string, string> = {
   "Flacon": "🍾",
-  "Decant": "🧪",
   "Echantillon": "💧",
   "Bottle": "🍾",
   "Sample": "💧"
@@ -348,7 +347,7 @@ export default function CollectionPage() {
                   <div>
                     <label className="text-[10px] text-white/30 uppercase tracking-[0.25em] font-bold mb-3 block">{t('format')}</label>
                     <div className="flex gap-2">
-                      {["Flacon", "Decant", "Echantillon"].map(f => (
+                      {["Flacon", "Echantillon"].map(f => (
                         <button key={f} type="button" onClick={() => setFormFormat(f)} className={`flex-1 py-3 rounded-xl text-[9px] font-bold border transition-all ${formFormat === f ? "border-primary bg-primary text-black" : "border-white/5 bg-white/5 text-white/40"}`}>{f}</button>
                       ))}
                     </div>
@@ -368,13 +367,15 @@ export default function CollectionPage() {
       {editingItem && (
         <div className="fixed inset-0 z-[110] flex items-end md:items-center justify-center bg-black/80 backdrop-blur-xl px-0 md:px-4" onClick={() => setEditingItem(null)}>
           <div className="w-full max-w-md bg-[#0a0a0a] rounded-t-[2.5rem] md:rounded-[2.5rem] p-8 md:p-10 border-t md:border border-white/10 shadow-2xl pb-32 md:pb-10" onClick={e => e.stopPropagation()}>
-            <h2 className="text-3xl font-heading font-bold text-white mb-2">{t('edit_details').split(' ')[0]} <span className="text-primary">{t('edit_details').split(' ')[1] || ""}</span></h2>
+            <h2 className="text-3xl font-heading font-bold text-white mb-2 leading-tight">
+              {t('edit_details').split(' ')[0]} <span className="text-primary">{t('edit_details').split(' ').slice(1).join(' ')}</span>
+            </h2>
             <p className="text-white/30 text-xs mb-8">{editingItem.perfume.name}</p>
             <form onSubmit={handleUpdate} className="space-y-8">
               <div className="space-y-6">
                 <div>
                   <label className="text-[10px] text-white/30 uppercase tracking-[0.25em] font-bold mb-3 block">{t('opening_date')}</label>
-                  <input type="date" value={formOpenedAt} onChange={e => setFormOpenedAt(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white [color-scheme:dark]" />
+                  <input type="date" value={formOpenedAt} onChange={e => setFormOpenedAt(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-4 text-white [color-scheme:dark] text-sm" />
                 </div>
                 <div>
                   <label className="text-[10px] text-white/30 uppercase tracking-[0.25em] font-bold mb-3 block">{t('remaining_level')} ({formLevel}%)</label>
@@ -383,7 +384,7 @@ export default function CollectionPage() {
                 <div>
                   <label className="text-[10px] text-white/30 uppercase tracking-[0.25em] font-bold mb-3 block">{t('format')}</label>
                   <div className="flex gap-2">
-                    {["Flacon", "Decant", "Echantillon"].map(f => (
+                    {["Flacon", "Echantillon"].map(f => (
                       <button key={f} type="button" onClick={() => setFormFormat(f)} className={`flex-1 py-3 rounded-xl text-[9px] font-bold border transition-all ${formFormat === f ? "border-primary bg-primary text-black" : "border-white/5 bg-white/5 text-white/30"}`}>{f}</button>
                     ))}
                   </div>

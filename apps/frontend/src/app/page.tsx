@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col items-center">
       {/* Hero Section */}
@@ -10,26 +15,26 @@ export default function Home() {
         
         <div className="relative z-10 text-center max-w-3xl px-6">
           <h1 className="text-5xl md:text-7xl font-heading font-bold mb-4 md:mb-6 leading-tight">
-            Curate Your <br />
+            {t('hero_title_1')} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-amber-200">
-              Olfactory Journey
+              {t('hero_title_2')}
             </span>
           </h1>
           <p className="text-base md:text-xl text-white/60 mb-8 md:mb-10 max-w-2xl mx-auto font-light">
-            ScentLibrary is your premium digital cabinet to track, discover, and organize your fragrance collection. From the first spray to the dry down.
+            {t('hero_desc')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
               href="/library" 
               className="w-full sm:w-auto px-8 py-4 bg-primary text-black font-medium rounded-full hover:bg-primary-hover transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transform hover:-translate-y-1"
             >
-              Explore the Library
+              {t('btn_explore')}
             </Link>
             <Link 
               href="/collection" 
               className="w-full sm:w-auto px-8 py-4 glass text-white font-medium rounded-full glass-hover transition-all duration-300"
             >
-              My Collection
+              {t('btn_collection')}
             </Link>
           </div>
         </div>
@@ -41,9 +46,9 @@ export default function Home() {
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">
             📚
           </div>
-          <h3 className="text-2xl font-heading font-semibold mb-3 text-white">Extensive Library</h3>
+          <h3 className="text-2xl font-heading font-semibold mb-3 text-white">{t('feature_1_title')}</h3>
           <p className="text-white/50 leading-relaxed font-light">
-            Search through a rich database of fragrances. View detailed notes, accords, and community ratings.
+            {t('feature_1_desc')}
           </p>
         </div>
 
@@ -52,9 +57,9 @@ export default function Home() {
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">
             💧
           </div>
-          <h3 className="text-2xl font-heading font-semibold mb-3 text-white">Oxidation Tracker</h3>
+          <h3 className="text-2xl font-heading font-semibold mb-3 text-white">{t('feature_2_title')}</h3>
           <p className="text-white/50 leading-relaxed font-light">
-            Monitor the maceration and oxidation of your collection to know exactly when a fragrance reaches its peak.
+            {t('feature_2_desc')}
           </p>
         </div>
 
@@ -62,9 +67,9 @@ export default function Home() {
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">
             ✨
           </div>
-          <h3 className="text-2xl font-heading font-semibold mb-3 text-white">Scent Picker</h3>
+          <h3 className="text-2xl font-heading font-semibold mb-3 text-white">{t('feature_3_title')}</h3>
           <p className="text-white/50 leading-relaxed font-light">
-            Not sure what to wear? Let the intelligent scent picker choose based on weather, season, and your mood.
+            {t('feature_3_desc')}
           </p>
         </div>
       </section>
