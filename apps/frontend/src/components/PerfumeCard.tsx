@@ -147,9 +147,19 @@ export default function PerfumeCard({ perfume, forceOpen, onClose, collectionDat
 
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center bg-black/80 backdrop-blur-xl p-0 md:p-6" onClick={handleClose}>
-          <div className="w-full max-w-4xl bg-[#0a0a0a] rounded-t-[2.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border-t md:border border-white/10 max-h-[95vh] md:max-h-[90vh] flex flex-col animate-in slide-in-from-bottom duration-500" onClick={e => e.stopPropagation()}>
-            <div className="md:hidden flex justify-center py-4">
-              <div className="w-12 h-1 bg-white/20 rounded-full" />
+          <div className="w-full max-w-4xl bg-[#0a0a0a] rounded-t-[2.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border-t md:border border-white/10 max-h-[95vh] md:max-h-[90vh] flex flex-col animate-in slide-in-from-bottom duration-500 relative" onClick={e => e.stopPropagation()}>
+            {/* Close Button Mobile */}
+            <div className="absolute top-6 right-6 z-[110] md:hidden">
+              <button 
+                onClick={handleClose}
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white text-xl backdrop-blur-md"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="md:hidden flex justify-center py-4 cursor-pointer" onClick={handleClose}>
+              <div className="w-12 h-1 bg-white/30 rounded-full" />
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 pb-32 md:pb-14">
