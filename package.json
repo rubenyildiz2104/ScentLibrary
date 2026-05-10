@@ -1,0 +1,16 @@
+{
+  "name": "scentlibrary-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces",
+    "install:all": "npm install"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.105.3"
+  }
+}

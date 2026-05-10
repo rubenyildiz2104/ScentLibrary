@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Perfume {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String
+  brand        String?
+  release_year Int?
+  gender       String?
+  notes_top    String[]
+  notes_middle String[]
+  notes_base   String[]
+  accords      String[]
+  rating       Float?    @db.Real
+  votes        Int?
+  description  String?
+  longevity    String?
+  sillage      String?
+  perfumer     String?
+  image_url    String?
+  perfume_url  String?   @unique
+  created_at   DateTime? @default(dbgenerated("TIMEZONE('utc', NOW())")) @db.Timestamptz
+  
+  items        CollectionItem[]
+  discoveries  DiscoveryItem[]
+  
+  @@map("perfumes")
+}
+
+model User {
+  id          String   @id @db.Uuid
+  username    String   @unique
+  isPublic    Boolean  @default(false)
+  collection  CollectionItem[]
+  discoveries DiscoveryItem[]
+  
+  @@map("users")
+}
+
+model CollectionItem {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @db.Uuid
+  perfumeId   String   @db.Uuid
+  format      String
+  level       Int      @default(100)
+  openedAt    DateTime
+  user        User     @relation(fields: [userId], references: [id])
+  perfume     Perfume  @relation(fields: [perfumeId], references: [id])
+  
+  @@map("collection_items")
+}
+
+model DiscoveryItem {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @db.Uuid
+  perfumeId   String?  @db.Uuid
+  perfumeName String?
+  perfumeBrand String?
+  status      String
+  sillage     Int?
+  longevity   Int?
+  verdict     String?
+  user        User     @relation(fields: [userId], references: [id])
+  perfume     Perfume? @relation(fields: [perfumeId], references: [id])
+  
+  @@map("discovery_items")
+}
