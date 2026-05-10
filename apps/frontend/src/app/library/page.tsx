@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import PerfumeCard from "@/components/PerfumeCard";
 import { useTranslation } from "@/context/LanguageContext";
+import { API_URL } from "@/utils/api";
 
 type Perfume = {
   id: string;
@@ -64,8 +65,8 @@ export default function LibraryPage() {
     setLoading(true);
     const currentPage = reset ? 1 : page;
     const url = query.trim() 
-      ? `http://127.0.0.1:3000/perfumes/search?q=${encodeURIComponent(query)}&page=${currentPage}&limit=${LIMIT}`
-      : `http://127.0.0.1:3000/perfumes?page=${currentPage}&limit=${LIMIT}&gender=${gender}`;
+      ? `${API_URL}/perfumes/search?q=${encodeURIComponent(query)}&page=${currentPage}&limit=${LIMIT}`
+      : `${API_URL}/perfumes?page=${currentPage}&limit=${LIMIT}&gender=${gender}`;
 
     try {
       const res = await fetch(url);
